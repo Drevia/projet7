@@ -4,10 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import java.sql.Timestamp;
-
 
 @Entity
 @Table(name = "trade")
