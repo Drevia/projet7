@@ -57,7 +57,7 @@ public class RuleNameController {
             return "ruleName/update";
         } else {
             //log warn ou info
-            //retourner sur une page 404 au lieu d'update
+            //TODO: retourner sur une page 404 au lieu d'update
             return "ruleName/update";
         }
     }
