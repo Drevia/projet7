@@ -59,7 +59,7 @@ public class RatingController {
         } else {
             //log warn ou info
             //retourner sur une page 404 au lieu d'update
-            return "rating/update";
+            return "rating/404";
         }
     }
 
