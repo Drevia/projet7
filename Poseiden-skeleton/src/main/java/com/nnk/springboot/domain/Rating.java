@@ -1,8 +1,6 @@
 package com.nnk.springboot.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -10,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 @Table(name = "rating")
 public class Rating {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NotNull
@@ -25,7 +24,6 @@ public class Rating {
     private String fitchRating;
 
     @NotNull
-    @NotBlank
     private Integer orderNumber;
 
     public Rating(String moodysRating, String sandPRating, String fitchRating, int orderNumber) {

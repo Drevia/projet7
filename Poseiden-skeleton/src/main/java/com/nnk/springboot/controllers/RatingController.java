@@ -13,19 +13,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Controller
 public class RatingController {
-    // TODO: Inject Rating service
 
     @Autowired
-    RatingService ratingService;
+    private RatingService ratingService;
 
     @RequestMapping("/rating/list")
     public String home(Model model)
     {
-        // TODO: find all Rating, add to model
         List<Rating> ratingList = ratingService.findAllRating();
         model.addAttribute("ratings", ratingList);
         return "rating/list";
@@ -37,31 +36,39 @@ public class RatingController {
     }
 
     @PostMapping("/rating/validate")
-    public String validate(@Valid Rating rating, BindingResult result, Model model) {
-        // TODO: check data valid and save to db, after saving return Rating list
+    public String validate(@Valid Rating rating, BindingResult result) {
         if (result.hasErrors()) {
-            //throw something
+            //ajouter un log warn/info
+            return "rating/add";
         } else {
             ratingService.saveRating(rating);
-
+            return "redirect:/rating/list";
         }
-        //return "rating/list";
-        return "rating/add";
     }
 
     @GetMapping("/rating/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        Rating rating = ratingService.findRatingById(id);
-        // TODO: get Rating by Id and to model then show to the form
-        return "rating/update";
+        Optional<Rating> rating = ratingService.findRatingById(id);
+        //on s'assure que le modele soit bien présent
+        if (rating.isPresent()){
+            model.addAttribute("moodysRating", rating.get().getMoodysRating());
+            model.addAttribute("fitchRating", rating.get().getFitchRating());
+            model.addAttribute("sandPRating", rating.get().getSandPRating());
+            model.addAttribute("orderNumber", rating.get().getOrderNumber());
+            return "rating/update";
+        } else {
+            //log warn ou info
+            //retourner sur une page 404 au lieu d'update
+            return "rating/update";
+        }
     }
 
     @PostMapping("/rating/update/{id}")
     public String updateRating(@PathVariable("id") Integer id, @Valid Rating rating,
                              BindingResult result, Model model) {
-        // TODO: check required fields, if valid call service to update Rating and return Rating list
         if (result.hasErrors()){
-            //throw error
+            //ajouter un log warn/info
+            return "rating/update";
         } else {
             ratingService.updateRating(id, rating);
         }
@@ -70,7 +77,6 @@ public class RatingController {
 
     @GetMapping("/rating/delete/{id}")
     public String deleteRating(@PathVariable("id") Integer id, Model model) {
-        // TODO: Find Rating by Id and delete the Rating, return to Rating list
         ratingService.deleteById(id);
         return "redirect:/rating/list";
     }
