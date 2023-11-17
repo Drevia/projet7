@@ -28,7 +28,6 @@ public class CurveService {
 
     public void updateCurvePoint(Integer id, CurvePoint newCurvePoint) {
         CurvePoint curvePoint = repository.findById(id).orElseThrow();
-        curvePoint.setCurveId(newCurvePoint.getCurveId());
         curvePoint.setTerm(newCurvePoint.getTerm());
         curvePoint.setValue(newCurvePoint.getValue());
         curvePoint.setCreationDate(newCurvePoint.getCreationDate());

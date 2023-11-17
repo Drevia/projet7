@@ -43,6 +43,10 @@ public class BidList {
 
     }
 
+    public BidList() {
+
+    }
+
     public void setBidListId(Long bidListId) {
         this.bidListId = bidListId;
     }
