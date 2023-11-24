@@ -1,17 +1,21 @@
 package com.nnk.springboot.config;
 
-import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 
@@ -31,28 +35,28 @@ public class SpringSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http)
             throws Exception {
 
-       http.sessionManagement(httpSecuritySessionManagementConfigurer ->
-               httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                       .maximumSessions(1));
-       http.authorizeHttpRequests((auth) ->
-               auth.requestMatchers("/login")
-                       .permitAll()
-                        .anyRequest()
-                       .authenticated())
-               .formLogin((formLogin) ->
-                       formLogin
-                               .loginPage("/login")
-                               .defaultSuccessUrl("/home", true));
-       /*http.formLogin((formLogin) ->
-               formLogin.loginPage("/login")
-                       .passwordParameter("password")
-                       .usernameParameter("username")
-                       .defaultSuccessUrl("/home")
-                       .permitAll()).csrf().disable()
-               .authorizeHttpRequests((auth) ->
-                       auth.requestMatchers("/rating/list").authenticated()
-                               .requestMatchers("/css/bootstrap.min.css").permitAll());*/
-       return http.build();
+        http.formLogin((formLogin) ->
+                        formLogin.defaultSuccessUrl("/home", true)
+                                .permitAll())
+
+                .authorizeHttpRequests((auth) -> auth.requestMatchers("/login").permitAll()
+                        .requestMatchers("/home").permitAll()
+                        .requestMatchers("/css/bootstrap.min.css").permitAll());
+        return http.build();
+    }
+
+    @Bean
+    public UserDetailsService users() {
+        UserDetails user = User.builder()
+                .username("toto")
+                .password(passwordEncoder().encode("password"))
+                .roles("USER", "ADMIN").build();
+        return new InMemoryUserDetailsManager(user);
+    }
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
@@ -60,8 +64,8 @@ public class SpringSecurityConfig {
         return new HttpSessionEventPublisher();
     }
 
-    @Autowired
+    /*@Autowired
     void configure(AuthenticationManagerBuilder auth, DaoAuthenticationProvider authenticationProvider) {
         auth.authenticationProvider(authenticationProvider);
-    }
+    }*/
 }
