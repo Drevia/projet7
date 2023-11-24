@@ -48,7 +48,8 @@ public class CurveController {
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         Optional<CurvePoint> curvePoint = service.findCurveById(id);
         if(curvePoint.isPresent()) {
-            model.addAttribute("curvePoint", curvePoint.get());
+            model.addAttribute("term", curvePoint.get().getTerm());
+            model.addAttribute("value", curvePoint.get().getValue());
             return "curvePoint/update";
         } else {
             //return 404

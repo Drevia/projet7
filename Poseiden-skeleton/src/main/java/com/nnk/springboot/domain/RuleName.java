@@ -22,6 +22,10 @@ public class RuleName {
 
     }
 
+    public RuleName() {
+
+    }
+
     public void setId(Long id) {
         this.id = id;
     }

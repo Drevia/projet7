@@ -25,7 +25,7 @@ public class RuleNameController {
     public String home(Model model)
     {
         List<RuleName> ruleNameList = service.findAllRuleName();
-        model.addAttribute("rulenames", ruleNameList);
+        model.addAttribute("ruleNames", ruleNameList);
         return "ruleName/list";
     }
 

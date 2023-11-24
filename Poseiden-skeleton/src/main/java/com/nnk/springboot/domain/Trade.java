@@ -41,4 +41,8 @@ public class Trade {
     public Trade(String tradeAccount, String type) {
 
     }
+
+    public Trade() {
+
+    }
 }
