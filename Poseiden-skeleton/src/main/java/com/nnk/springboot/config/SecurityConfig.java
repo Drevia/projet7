@@ -9,10 +9,10 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-@Configuration
+/*@Configuration*/
 public class SecurityConfig {
 
-    @Autowired
+    /*@Autowired
     private UserRepository userRepository;
 
     @Bean
@@ -29,5 +29,5 @@ public class SecurityConfig {
         });
         authProvider.setPasswordEncoder(new CustomPasswordEncoder());
         return authProvider;
-    }
+    }*/
 }

@@ -36,12 +36,13 @@ public class SpringSecurityConfig {
             throws Exception {
 
         http.formLogin((formLogin) ->
-                        formLogin.defaultSuccessUrl("/home", true)
+                        formLogin.defaultSuccessUrl("/admin/home", true)
                                 .permitAll())
 
                 .authorizeHttpRequests((auth) -> auth.requestMatchers("/login").permitAll()
-                        .requestMatchers("/home").permitAll()
-                        .requestMatchers("/css/bootstrap.min.css").permitAll());
+                        .requestMatchers("/admin/home").permitAll()
+                        .requestMatchers("/css/bootstrap.min.css").permitAll()
+                        .requestMatchers("/bidList/list").fullyAuthenticated());
         return http.build();
     }
 
