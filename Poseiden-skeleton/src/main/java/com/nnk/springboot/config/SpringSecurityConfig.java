@@ -4,6 +4,8 @@ import com.nnk.springboot.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -25,6 +27,14 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class SpringSecurityConfig {
 
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
+
+    @Bean
+    public CustomPasswordEncoder customPasswordEncoder() {
+        return new CustomPasswordEncoder();
+    }
+
     /**
      * Configuration de la creation de spring security (celle ci se créée uniquement si necessaire)
      * @param http
@@ -42,17 +52,19 @@ public class SpringSecurityConfig {
                 .authorizeHttpRequests((auth) -> auth.requestMatchers("/login").permitAll()
                         .requestMatchers("/admin/home").permitAll()
                         .requestMatchers("/css/bootstrap.min.css").permitAll()
-                        .requestMatchers("/bidList/list").fullyAuthenticated());
+                        .requestMatchers("/bidList/**").fullyAuthenticated()
+                        .requestMatchers("/user/**").fullyAuthenticated())
+                .authenticationManager( authenticationManager())
+                .sessionManagement(session -> session.maximumSessions(1));
         return http.build();
     }
 
     @Bean
-    public UserDetailsService users() {
-        UserDetails user = User.builder()
-                .username("toto")
-                .password(passwordEncoder().encode("password"))
-                .roles("USER", "ADMIN").build();
-        return new InMemoryUserDetailsManager(user);
+    public AuthenticationManager authenticationManager() {
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setPasswordEncoder(customPasswordEncoder());
+        daoAuthenticationProvider.setUserDetailsService(customUserDetailsService);
+        return new ProviderManager(daoAuthenticationProvider);
     }
 
     @Bean
