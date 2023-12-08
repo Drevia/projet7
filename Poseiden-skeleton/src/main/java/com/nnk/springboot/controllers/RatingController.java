@@ -55,7 +55,8 @@ public class RatingController {
             model.addAttribute("fitchRating", rating.get().getFitchRating());
             model.addAttribute("sandPRating", rating.get().getSandPRating());
             model.addAttribute("orderNumber", rating.get().getOrderNumber());
-            return "rating/update";
+            model.addAttribute("id", rating.get().getId());
+            return "rating/update/{id}";
         } else {
             //log warn ou info
             //retourner sur une page 404 au lieu d'update

@@ -18,6 +18,13 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
     private UserRepository repository;
+
+    /**
+     * Find user in database to create a Spring security User
+     * @param username
+     * @return
+     * @throws UsernameNotFoundException
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User customUser = repository.findByUsername(username);
