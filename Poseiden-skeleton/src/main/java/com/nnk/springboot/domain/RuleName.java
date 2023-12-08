@@ -81,5 +81,5 @@ public class RuleName {
     public void setSqlPart(String sqlPart) {
         this.sqlPart = sqlPart;
     }
-    // TODO: Map columns in data table RULENAME with corresponding java fields
+
 }

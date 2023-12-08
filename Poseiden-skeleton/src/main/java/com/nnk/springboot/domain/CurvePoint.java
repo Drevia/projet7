@@ -74,5 +74,5 @@ public class CurvePoint {
     public void setCreationDate(Timestamp creationDate) {
         this.creationDate = creationDate;
     }
-    // TODO: Map columns in data table CURVEPOINT with corresponding java fields
+
 }

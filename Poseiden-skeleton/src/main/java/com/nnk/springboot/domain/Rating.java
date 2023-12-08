@@ -73,5 +73,5 @@ public class Rating {
     public void setOrderNumber(Integer orderNumber) {
         this.orderNumber = orderNumber;
     }
-    // TODO: Map columns in data table RATING with corresponding java fields
+
 }

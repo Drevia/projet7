@@ -54,5 +54,5 @@ public class BidList {
     public Long getBidListId() {
         return bidListId;
     }
-    // TODO: Map columns in data table BIDLIST with corresponding java fields
+
 }
