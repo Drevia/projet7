@@ -1,14 +1,21 @@
 package com.nnk.springboot.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.Timestamp;
 
 
 @Entity
 @Table(name = "curvepoint")
+@EqualsAndHashCode
+@Getter
+@Setter
 public class CurvePoint {
     @Id
     private Long id;
@@ -16,6 +23,8 @@ public class CurvePoint {
     private Integer curveId;
     private Timestamp asOfDate;
     private Double term;
+
+    @Column(name = "curve_value")
     private Double value;
     private Timestamp creationDate;
 
@@ -26,53 +35,4 @@ public class CurvePoint {
     public CurvePoint() {
 
     }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Integer getCurveId() {
-        return curveId;
-    }
-
-    public void setCurveId(Integer curveId) {
-        this.curveId = curveId;
-    }
-
-    public Timestamp getAsOfDate() {
-        return asOfDate;
-    }
-
-    public void setAsOfDate(Timestamp asOfDate) {
-        this.asOfDate = asOfDate;
-    }
-
-    public Double getTerm() {
-        return term;
-    }
-
-    public void setTerm(Double term) {
-        this.term = term;
-    }
-
-    public Double getValue() {
-        return value;
-    }
-
-    public void setValue(Double value) {
-        this.value = value;
-    }
-
-    public Timestamp getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(Timestamp creationDate) {
-        this.creationDate = creationDate;
-    }
-
 }
