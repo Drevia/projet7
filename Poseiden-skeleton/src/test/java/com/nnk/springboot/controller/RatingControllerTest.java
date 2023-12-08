@@ -8,16 +8,16 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.security.test.context.support.WithMockUser;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -27,10 +27,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-/*@SqlGroup({
-        @Sql(value = "classpath:empty/reset.sql", executionPhase = BEFORE_TEST_METHOD),
-        @Sql(value = "classpath:init/user-data.sql", executionPhase = BEFORE_TEST_METHOD)
-})*/
+@SqlGroup({
+        @Sql(value = "classpath:empty/reset.sql", executionPhase = AFTER_TEST_METHOD)
+})
 public class RatingControllerTest {
 
     @Autowired
@@ -90,7 +89,7 @@ public class RatingControllerTest {
 
         mockMvc.perform(get("/rating/list").with(csrf())).andDo(print())
                 .andExpect(view().name("rating/list"))
-                /*.andExpect(model().attribute("ratings.size", 1))*/
+                .andExpect(model().attribute("ratings", ratingList))
                 .andExpect(status().isOk());
     }
 
@@ -106,8 +105,7 @@ public class RatingControllerTest {
         ratingRepository.save(rating);
 
         mockMvc.perform(get("/rating/delete/1").with(csrf())).andDo(print())
-                /*.andExpect(model().attribute("ratings.size", 1))*/
-                .andExpect(status().isFound());
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -121,7 +119,7 @@ public class RatingControllerTest {
 
         ratingRepository.save(rating);
 
-        mockMvc.perform(post("/rating/update/1").with(csrf())
+        mockMvc.perform(post("/rating/update/" + rating.getId()).with(csrf())
                 .param("moodysRating", "1")
                 .param("sandPRating", "2")
                 .param("fitchRating", "3")
@@ -142,7 +140,7 @@ public class RatingControllerTest {
         ratingRepository.save(rating);
 
         mockMvc.perform(get("/rating/update/1").with(csrf())).andDo(print())
-                .andExpect(status().is3xxRedirection());
+                .andExpect(status().is2xxSuccessful());
 
     }
 }
