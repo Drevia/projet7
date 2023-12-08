@@ -48,12 +48,11 @@ public class CurveController {
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         Optional<CurvePoint> curvePoint = service.findCurveById(id);
         if(curvePoint.isPresent()) {
-            model.addAttribute("term", curvePoint.get().getTerm());
-            model.addAttribute("value", curvePoint.get().getValue());
+            model.addAttribute("curvePoint", curvePoint.get());
             return "curvePoint/update";
         } else {
             //return 404
-            return "curvePoint/update";
+            return "404";
         }
 
     }
@@ -72,6 +71,6 @@ public class CurveController {
     @GetMapping("/curvePoint/delete/{id}")
     public String deleteBid(@PathVariable("id") Integer id, Model model) {
         service.deleteCurveById(id);
-        return "redirect:/curvePoint/list";
+        return "forward:/curvePoint/list";
     }
 }

@@ -48,17 +48,11 @@ public class RuleNameController {
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         Optional<RuleName> ruleName = service.findById(id);
         if (ruleName.isPresent()) {
-            model.addAttribute("name", ruleName.get().getName());
-            model.addAttribute("description", ruleName.get().getDescription());
-            model.addAttribute("json", ruleName.get().getJson());
-            model.addAttribute("template", ruleName.get().getTemplate());
-            model.addAttribute("sqlStr", ruleName.get().getSqlStr());
-            model.addAttribute("sqlPart", ruleName.get().getSqlPart());
+            model.addAttribute("ruleName", ruleName.get());
             return "ruleName/update";
         } else {
             //log warn ou info
-            //TODO: retourner sur une page 404 au lieu d'update
-            return "ruleName/update";
+            return "404";
         }
     }
 
@@ -77,6 +71,6 @@ public class RuleNameController {
     @GetMapping("/ruleName/delete/{id}")
     public String deleteRuleName(@PathVariable("id") Integer id, Model model) {
         service.deleteById(id);
-        return "redirect:/ruleName/list";
+        return "forward:/ruleName/list";
     }
 }

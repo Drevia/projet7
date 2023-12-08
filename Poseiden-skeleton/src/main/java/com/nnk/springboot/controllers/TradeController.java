@@ -48,14 +48,10 @@ public class TradeController {
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         Optional<Trade> trade = service.findById(id);
         if (trade.isPresent()) {
-            model.addAttribute("account", trade.get().getAccount());
-            model.addAttribute("type", trade.get().getType());
-            model.addAttribute("buyQuantity", trade.get().getBuyQuantity());
-            model.addAttribute("id", trade.get().getTradeId());
+            model.addAttribute("trade", trade.get());
             return "trade/update";
         } else {
-            //TODO: retourner la page 404
-            return "trade/update";
+            return "404";
         }
     }
 
@@ -73,6 +69,6 @@ public class TradeController {
     @GetMapping("/trade/delete/{id}")
     public String deleteTrade(@PathVariable("id") Integer id, Model model) {
         service.deleteById(id);
-        return "redirect:/trade/list";
+        return "forward:/trade/list";
     }
 }

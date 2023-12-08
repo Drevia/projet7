@@ -51,16 +51,11 @@ public class RatingController {
         Optional<Rating> rating = ratingService.findRatingById(id);
         //on s'assure que le modele soit bien présent
         if (rating.isPresent()){
-            model.addAttribute("moodysRating", rating.get().getMoodysRating());
-            model.addAttribute("fitchRating", rating.get().getFitchRating());
-            model.addAttribute("sandPRating", rating.get().getSandPRating());
-            model.addAttribute("orderNumber", rating.get().getOrderNumber());
-            model.addAttribute("id", rating.get().getId());
-            return "rating/update/{id}";
+            model.addAttribute("rating", rating.get());
+            return "rating/update";
         } else {
             //log warn ou info
-            //retourner sur une page 404 au lieu d'update
-            return "rating/404";
+            return "404";
         }
     }
 
@@ -79,6 +74,6 @@ public class RatingController {
     @GetMapping("/rating/delete/{id}")
     public String deleteRating(@PathVariable("id") Integer id, Model model) {
         ratingService.deleteById(id);
-        return "redirect:/rating/list";
+        return "forward:/rating/list";
     }
 }

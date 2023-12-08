@@ -26,7 +26,6 @@ public class BidListController {
     public String home(Model model)
     {
         List<BidList> bidLists = service.findAll();
-        SecurityContext contextHolder = SecurityContextHolder.getContext();
         model.addAttribute("bidLists", bidLists);
         return "bidList/list";
     }
@@ -50,13 +49,10 @@ public class BidListController {
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         Optional<BidList> bidList = service.findById(id);
         if (bidList.isPresent()){
-            model.addAttribute("account", bidList.get().getAccount());
-            model.addAttribute("type", bidList.get().getType());
-            model.addAttribute("bidQuantity", bidList.get().getBidQuantity());
+            model.addAttribute("bidList", bidList.get());
             return "bidList/update";
         } else {
-            //TODO: retourner page 404
-            return "bidList/update";
+            return "404";
         }
     }
 
@@ -74,6 +70,6 @@ public class BidListController {
     @GetMapping("/bidList/delete/{id}")
     public String deleteBid(@PathVariable("id") Integer id, Model model) {
         service.deleteById(id);
-        return "redirect:/bidList/list";
+        return "forward:/bidList/list";
     }
 }
