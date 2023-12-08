@@ -1,0 +1,1 @@
+INSERT INTO rating(fitch_rating, moodys_rating, order_number, sandprating) VALUES ('1', '1', 1, '1')
