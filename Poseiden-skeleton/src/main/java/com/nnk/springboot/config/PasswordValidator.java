@@ -4,16 +4,22 @@ import com.nnk.springboot.domain.ValidPassword;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
+/**
+ * this class is used to check if a password fulfill the required conditions such
+ * as minimum length, using digit and special characters, if not, the password is
+ * not valid
+ */
 public class PasswordValidator implements ConstraintValidator<ValidPassword, String> {
 
     private static final int MIN_PASSWORD_LENGTH = 8;
     private static final int MIN_DIGITS = 1;
-    private static final String SPECIAL_CHARACTERS = "!@#$%^&*()-+";
+    private static final String SPECIAL_CHARACTERS = "!@#$%^&*()-+.";
 
     @Override
     public void initialize(ValidPassword constraintAnnotation) {
         ConstraintValidator.super.initialize(constraintAnnotation);
     }
+
 
     @Override
     public boolean isValid(String rawPassword, ConstraintValidatorContext constraintValidatorContext) {
