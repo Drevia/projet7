@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -28,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SqlGroup({
-        @Sql(value = "classpath:empty/reset.sql", executionPhase = AFTER_TEST_METHOD)
+        @Sql(value = "classpath:empty/reset.sql", executionPhase = BEFORE_TEST_METHOD)
 })
 public class RatingControllerTest {
 
