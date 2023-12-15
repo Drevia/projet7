@@ -40,7 +40,7 @@ public class TradeController {
             return "trade/add";
         } else {
             service.saveTrade(trade);
-            return "redirect:/trade/add";
+            return "redirect:/trade/list";
         }
     }
 
