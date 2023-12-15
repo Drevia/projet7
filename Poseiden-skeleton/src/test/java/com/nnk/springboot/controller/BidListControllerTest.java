@@ -1,6 +1,8 @@
 package com.nnk.springboot.controller;
 
+import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.domain.Trade;
+import com.nnk.springboot.repositories.BidListRepository;
 import com.nnk.springboot.repositories.TradeRepository;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -30,109 +32,109 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SqlGroup({
         @Sql(value = "classpath:empty/reset.sql", executionPhase = BEFORE_TEST_METHOD)
 })
-public class TradeControllerTest {
+public class BidListControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
-    private TradeRepository tradeRepository;
+    private BidListRepository bidListRepository;
 
     @Test
     @WithMockUser("userTest")
-    void shouldCreateTrade() throws Exception {
-        mockMvc.perform(post("/trade/validate")
+    void shouldCreateBid() throws Exception {
+        mockMvc.perform(post("/bidList/validate")
                         .with(csrf())
                         .param("account", "account")
                         .param("type", "type")
-                        .param("buyQuantity", "1"))
+                        .param("bidQuantity", "1"))
                 .andDo(print())
-                .andExpect(redirectedUrl("/trade/list"))
+                .andExpect(redirectedUrl("/bidList/list"))
                 .andExpect(status().is3xxRedirection());
     }
 
     @Test
     @WithMockUser("userTest")
-    void shouldReturnErrorTradeNotValid() throws Exception {
-        mockMvc.perform(post("/trade/validate")
+    void shouldReturnErrorRatingNotValid() throws Exception {
+        mockMvc.perform(post("/bidList/validate")
                         .with(csrf())
                         .param("account", "")
                         .param("type", "")
-                        .param("buyQuantity", ""))
+                        .param("bidQuantity", ""))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful());
     }
 
     @Test
     @WithMockUser("userTest")
-    void testTradePageOk() throws Exception {
+    void testRatingPageOk() throws Exception {
 
-        mockMvc.perform(get("/trade/add").with(csrf())).andDo(print())
-                .andExpect(view().name("trade/add"))
+        mockMvc.perform(get("/bidList/add").with(csrf())).andDo(print())
+                .andExpect(view().name("bidList/add"))
                 .andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser("userTest")
-    void testTradeListPageOk() throws Exception {
-        Trade trade = new Trade();
-        trade.setAccount("account");
-        trade.setType("type");
-        trade.setBuyQuantity(10d);
+    void testRatingListPageOk() throws Exception {
+        BidList bidList = new BidList();
+        bidList.setAccount("account");
+        bidList.setType("type");
+        bidList.setBidQuantity(10d);
 
-        tradeRepository.save(trade);
-        List<Trade> tradeList = new ArrayList<>();
-        tradeList.add(trade);
+        bidListRepository.save(bidList);
+        List<BidList> bidLists = new ArrayList<>();
+        bidLists.add(bidList);
 
-        mockMvc.perform(get("/trade/list").with(csrf())).andDo(print())
-                .andExpect(view().name("trade/list"))
-                .andExpect(model().attribute("trades", tradeList))
+        mockMvc.perform(get("/bidList/list").with(csrf())).andDo(print())
+                .andExpect(view().name("bidList/list"))
+                .andExpect(model().attribute("bidLists", bidLists))
                 .andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser("userTest")
-    void shouldReturnOkWhenDeleteTrade() throws Exception {
-        Trade trade = new Trade();
-        trade.setAccount("account");
-        trade.setType("type");
-        trade.setBuyQuantity(10d);
+    void shouldReturnOkWhenDeleteRating() throws Exception {
+        BidList bidList = new BidList();
+        bidList.setAccount("account");
+        bidList.setType("type");
+        bidList.setBidQuantity(10d);
 
-        tradeRepository.save(trade);
+        bidListRepository.save(bidList);
 
-        mockMvc.perform(get("/trade/delete/1").with(csrf())).andDo(print())
+        mockMvc.perform(get("/bidList/delete/1").with(csrf())).andDo(print())
                 .andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser("userTest")
-    void shouldReturnOkWhenUpdateTrade() throws Exception {
-        Trade trade = new Trade();
-        trade.setAccount("account");
-        trade.setType("type");
-        trade.setBuyQuantity(10d);
+    void shouldReturnOkWhenUpdateRating() throws Exception {
+        BidList bidList = new BidList();
+        bidList.setAccount("account");
+        bidList.setType("type");
+        bidList.setBidQuantity(10d);
 
-        tradeRepository.save(trade);
+        bidListRepository.save(bidList);
 
-        mockMvc.perform(post("/trade/update/" + trade.getId()).with(csrf())
+        mockMvc.perform(post("/bidList/update/" + bidList.getId()).with(csrf())
                         .param("account", "account2")
                         .param("type", "type")
-                        .param("buyQuantity", "1")).andDo(print())
+                        .param("bidQuantity", "1")).andDo(print())
                 .andExpect(status().is3xxRedirection());
 
     }
 
     @Test
     @WithMockUser("userTest")
-    void shouldReturnOkWhenGetUpdateTrade() throws Exception {
-        Trade trade = new Trade();
-        trade.setAccount("account");
-        trade.setType("type");
-        trade.setBuyQuantity(10d);
+    void shouldReturnOkWhenGetUpdateRating() throws Exception {
+        BidList bidList = new BidList();
+        bidList.setAccount("account");
+        bidList.setType("type");
+        bidList.setBidQuantity(10d);
 
-        tradeRepository.save(trade);
+        bidListRepository.save(bidList);
 
-        mockMvc.perform(get("/trade/update/1").with(csrf())).andDo(print())
+        mockMvc.perform(get("/bidList/update/1").with(csrf())).andDo(print())
                 .andExpect(status().is2xxSuccessful());
 
     }
