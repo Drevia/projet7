@@ -1,8 +1,8 @@
 package com.nnk.springboot.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,13 +15,26 @@ import lombok.Setter;
 @Setter
 public class RuleName {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull
+    @NotBlank
     private String name;
+    @NotNull
+    @NotBlank
     private String description;
+    @NotNull
+    @NotBlank
     private String json;
+    @NotNull
+    @NotBlank
     private  String template;
+    @NotNull
+    @NotBlank
     private String sqlStr;
+    @NotNull
+    @NotBlank
     private String sqlPart;
 
     public RuleName(String ruleName, String description, String json, String template, String sqlStr, String sqlPart) {

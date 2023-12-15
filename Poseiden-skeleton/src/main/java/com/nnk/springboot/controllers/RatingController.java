@@ -36,7 +36,7 @@ public class RatingController {
     }
 
     @PostMapping("/rating/validate")
-    public String validate(@Valid Rating rating, BindingResult result) {
+    public String validate(@Valid Rating rating, BindingResult result, Model model) {
         if (result.hasErrors()) {
             //ajouter un log warn/info
             return "rating/add";

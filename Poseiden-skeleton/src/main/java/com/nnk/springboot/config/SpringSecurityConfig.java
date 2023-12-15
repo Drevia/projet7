@@ -42,7 +42,8 @@ public class SpringSecurityConfig {
                         .requestMatchers("/bidList/**").fullyAuthenticated()
                         .requestMatchers("/user/**").fullyAuthenticated()
                         .requestMatchers("/rating/**").fullyAuthenticated()
-                        .requestMatchers("/trade/**").fullyAuthenticated())
+                        .requestMatchers("/trade/**").fullyAuthenticated()
+                        .requestMatchers("/ruleName/**").fullyAuthenticated())
                 .authenticationManager( authenticationManager())
                 .sessionManagement(session -> session.maximumSessions(1))
                 .logout(logout -> logout.logoutUrl("/app-logout").invalidateHttpSession(true));
