@@ -17,9 +17,15 @@ import java.sql.Timestamp;
 public class BidList {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long bidListId;
+    private Long id;
+
+    @NotNull
+    @NotBlank
     private String account;
+    @NotNull
+    @NotBlank
     private String type;
+    @NotNull
     private Double bidQuantity;
     private Double askQuantity;
     private Double bid;
@@ -48,12 +54,12 @@ public class BidList {
 
     }
 
-    public void setBidListId(Long bidListId) {
-        this.bidListId = bidListId;
+    public void setId(Long bidListId) {
+        this.id = bidListId;
     }
 
-    public Long getBidListId() {
-        return bidListId;
+    public Long getId() {
+        return id;
     }
 
 }
