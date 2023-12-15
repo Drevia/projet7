@@ -1,8 +1,6 @@
 package com.nnk.springboot.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
@@ -18,6 +16,7 @@ import java.sql.Timestamp;
 @EqualsAndHashCode
 public class BidList {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long bidListId;
     private String account;
     private String type;

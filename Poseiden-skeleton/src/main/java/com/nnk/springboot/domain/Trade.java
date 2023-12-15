@@ -1,8 +1,6 @@
 package com.nnk.springboot.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +15,7 @@ import java.sql.Timestamp;
 @EqualsAndHashCode
 public class Trade {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long tradeId;
 
     private String account;
