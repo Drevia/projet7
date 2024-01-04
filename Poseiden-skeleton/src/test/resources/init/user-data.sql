@@ -1,1 +1,1 @@
-INSERT INTO users (fullname, password, role, username) VALUES ('toto', 'password', 'ADMIN', 'toto');
+INSERT INTO users (id, fullname, password, role, username) VALUES (5, 'toto', 'password', 'ADMIN', 'toto');

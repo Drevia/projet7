@@ -1,5 +1,6 @@
 package com.nnk.springboot.domain;
 
+import com.nnk.springboot.domain.annotation.ValidPassword;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

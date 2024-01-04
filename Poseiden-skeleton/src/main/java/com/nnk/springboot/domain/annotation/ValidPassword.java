@@ -1,4 +1,4 @@
-package com.nnk.springboot.domain;
+package com.nnk.springboot.domain.annotation;
 
 import com.nnk.springboot.config.PasswordValidator;
 import jakarta.validation.Constraint;
@@ -11,7 +11,7 @@ import java.lang.annotation.*;
 @Target( {ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidPassword {
-    String message() default "Invalid password";
+    String message() default "Password must have minimum 8 char, 1 digit and 1 special char (!@#$%^&*()-+.)";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

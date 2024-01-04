@@ -1,9 +1,9 @@
 package com.nnk.springboot.controller;
 
 import com.nnk.springboot.domain.BidList;
-import com.nnk.springboot.domain.Trade;
+import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.repositories.BidListRepository;
-import com.nnk.springboot.repositories.TradeRepository;
+import com.nnk.springboot.repositories.CurvePointRepository;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -32,94 +32,88 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SqlGroup({
         @Sql(value = "classpath:empty/reset.sql", executionPhase = BEFORE_TEST_METHOD)
 })
-public class BidListControllerTest {
+public class CurvePointControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
-    private BidListRepository bidListRepository;
+    private CurvePointRepository curvePointRepository;
 
     @Test
     @WithMockUser("userTest")
-    void shouldCreateBid() throws Exception {
-        mockMvc.perform(post("/bidList/validate")
+    void shouldCreateCurvePoint() throws Exception {
+        mockMvc.perform(post("/curvePoint/validate")
                         .with(csrf())
-                        .param("account", "account")
-                        .param("type", "type")
-                        .param("bidQuantity", "1"))
+                        .param("term", "20")
+                        .param("value", "1"))
                 .andDo(print())
-                .andExpect(redirectedUrl("/bidList/list"))
+                .andExpect(redirectedUrl("/curvePoint/list"))
                 .andExpect(status().is3xxRedirection());
     }
 
     @Test
     @WithMockUser("userTest")
-    void shouldReturnErrorRatingNotValid() throws Exception {
-        mockMvc.perform(post("/bidList/validate")
+    void shouldReturnErrorCurvePointNotValid() throws Exception {
+        mockMvc.perform(post("/curvePoint/validate")
                         .with(csrf())
-                        .param("account", "")
-                        .param("type", "")
-                        .param("bidQuantity", ""))
+                        .param("term", "")
+                        .param("value", ""))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful());
     }
 
     @Test
     @WithMockUser("userTest")
-    void testBidListPageOk() throws Exception {
+    void testCurvePointPageOk() throws Exception {
 
-        mockMvc.perform(get("/bidList/add").with(csrf())).andDo(print())
-                .andExpect(view().name("bidList/add"))
+        mockMvc.perform(get("/curvePoint/add").with(csrf())).andDo(print())
+                .andExpect(view().name("curvePoint/add"))
                 .andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser("userTest")
     void testRatingListPageOk() throws Exception {
-        BidList bidList = new BidList();
-        bidList.setAccount("account");
-        bidList.setType("type");
-        bidList.setBidQuantity(10d);
+        CurvePoint curvePoint = new CurvePoint();
+        curvePoint.setValue(2d);
+        curvePoint.setTerm(20d);
 
-        bidListRepository.save(bidList);
-        List<BidList> bidLists = new ArrayList<>();
-        bidLists.add(bidList);
+        curvePointRepository.save(curvePoint);
+        List<CurvePoint> curvePoints = new ArrayList<>();
+        curvePoints.add(curvePoint);
 
-        mockMvc.perform(get("/bidList/list").with(csrf())).andDo(print())
-                .andExpect(view().name("bidList/list"))
-                .andExpect(model().attribute("bidLists", bidLists))
+        mockMvc.perform(get("/curvePoint/list").with(csrf())).andDo(print())
+                .andExpect(view().name("curvePoint/list"))
+                .andExpect(model().attribute("curvePoints", curvePoints))
                 .andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser("userTest")
     void shouldReturnOkWhenDeleteRating() throws Exception {
-        BidList bidList = new BidList();
-        bidList.setAccount("account");
-        bidList.setType("type");
-        bidList.setBidQuantity(10d);
+        CurvePoint curvePoint = new CurvePoint();
+        curvePoint.setValue(2d);
+        curvePoint.setTerm(20d);
 
-        bidListRepository.save(bidList);
+        curvePointRepository.save(curvePoint);
 
-        mockMvc.perform(get("/bidList/delete/1").with(csrf())).andDo(print())
+        mockMvc.perform(get("/curvePoint/delete/1").with(csrf())).andDo(print())
                 .andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser("userTest")
     void shouldReturnOkWhenUpdateRating() throws Exception {
-        BidList bidList = new BidList();
-        bidList.setAccount("account");
-        bidList.setType("type");
-        bidList.setBidQuantity(10d);
+        CurvePoint curvePoint = new CurvePoint();
+        curvePoint.setValue(2d);
+        curvePoint.setTerm(20d);
 
-        bidListRepository.save(bidList);
+        curvePointRepository.save(curvePoint);
 
-        mockMvc.perform(post("/bidList/update/" + bidList.getId()).with(csrf())
-                        .param("account", "account2")
-                        .param("type", "type")
-                        .param("bidQuantity", "1")).andDo(print())
+        mockMvc.perform(post("/curvePoint/update/" + curvePoint.getId()).with(csrf())
+                        .param("value", "10")
+                        .param("term", "2")).andDo(print())
                 .andExpect(status().is3xxRedirection());
 
     }
@@ -127,14 +121,13 @@ public class BidListControllerTest {
     @Test
     @WithMockUser("userTest")
     void shouldReturnOkWhenGetUpdateRating() throws Exception {
-        BidList bidList = new BidList();
-        bidList.setAccount("account");
-        bidList.setType("type");
-        bidList.setBidQuantity(10d);
+        CurvePoint curvePoint = new CurvePoint();
+        curvePoint.setValue(2d);
+        curvePoint.setTerm(20d);
 
-        bidListRepository.save(bidList);
+        curvePointRepository.save(curvePoint);
 
-        mockMvc.perform(get("/bidList/update/1").with(csrf())).andDo(print())
+        mockMvc.perform(get("/curvePoint/update/1").with(csrf())).andDo(print())
                 .andExpect(status().is2xxSuccessful());
 
     }

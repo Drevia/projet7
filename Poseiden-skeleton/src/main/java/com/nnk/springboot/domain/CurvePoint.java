@@ -1,12 +1,13 @@
 package com.nnk.springboot.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Timestamp;
-
 
 @Entity
 @Table(name = "curvepoint")
@@ -20,9 +21,11 @@ public class CurvePoint {
 
     private Integer curveId;
     private Timestamp asOfDate;
+    @NotNull
     private Double term;
 
     @Column(name = "curve_value")
+    @NotNull
     private Double value;
     private Timestamp creationDate;
 

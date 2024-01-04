@@ -33,6 +33,11 @@ public class CustomUserDetailsService implements UserDetailsService {
                 customUser.getPassword(), getGrantedAuthorities(customUser.getRole()));
     }
 
+    /**
+     *
+     * @param role
+     * @return
+     */
     private List<GrantedAuthority> getGrantedAuthorities(String role) {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_" + role));

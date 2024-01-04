@@ -21,7 +21,7 @@ public class SpringSecurityConfig {
 
     /**
      * Spring conf to :
-     * <br>- all url you can acess when authenticated</br>
+     * <br>- all url you can access when authenticated</br>
      * <br>- use session based</br>
      * <br>- invalidate session when logout</br>
      * @param http
@@ -37,13 +37,16 @@ public class SpringSecurityConfig {
                                 .permitAll())
 
                 .authorizeHttpRequests((auth) -> auth.requestMatchers("/login").permitAll()
-                        .requestMatchers("/admin/home").permitAll()
+                        .requestMatchers("/admin/home").hasRole("ADMIN")
                         .requestMatchers("/css/bootstrap.min.css").permitAll()
                         .requestMatchers("/bidList/**").fullyAuthenticated()
-                        .requestMatchers("/user/**").fullyAuthenticated()
+                        .requestMatchers("/user/**").hasRole("ADMIN")
                         .requestMatchers("/rating/**").fullyAuthenticated()
                         .requestMatchers("/trade/**").fullyAuthenticated()
-                        .requestMatchers("/ruleName/**").fullyAuthenticated())
+                        .requestMatchers("/ruleName/**").fullyAuthenticated()
+                        .requestMatchers("/curvePoint/**").fullyAuthenticated()
+                        .requestMatchers("/").fullyAuthenticated()
+                        .requestMatchers("/app/**").permitAll())
                 .authenticationManager( authenticationManager())
                 .sessionManagement(session -> session.maximumSessions(1))
                 .logout(logout -> logout.logoutUrl("/app-logout").invalidateHttpSession(true));

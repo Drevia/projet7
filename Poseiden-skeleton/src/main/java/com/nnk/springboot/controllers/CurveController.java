@@ -40,7 +40,7 @@ public class CurveController {
             return "curvePoint/add";
         } else {
             service.saveCurve(curvePoint);
-            return "redirect:curvePoint/list";
+            return "redirect:/curvePoint/list";
         }
     }
 

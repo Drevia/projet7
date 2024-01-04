@@ -1,6 +1,6 @@
 package com.nnk.springboot.config;
 
-import com.nnk.springboot.domain.ValidPassword;
+import com.nnk.springboot.domain.annotation.ValidPassword;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
