@@ -72,8 +72,44 @@ public class UserControllerTest {
     @Test
     @WithUserDetails(value = "toto", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     void ShouldReturnUpdatePageUser() throws Exception {
-        //TODO: fix le test. Comment trouver un user valide pour le test
-        mockMvc.perform(get("/user/validate/1")
+        mockMvc.perform(get("/user/update/5")
+                        .with(csrf()))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful());
+    }
+
+    @Test
+    @WithUserDetails(value = "toto", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    void ShouldUpdateUser() throws Exception {
+        User userToDelete = new User();
+        userToDelete.setUsername("test");
+        userToDelete.setRole("USER");
+        userToDelete.setPassword("passwordtest123!");
+        userToDelete.setFullname("test");
+
+        userRepository.save(userToDelete);
+
+        mockMvc.perform(post("/user/update/" + userToDelete.getId()).with(csrf())
+                        .param("fullname", "newFullname")
+                        .param("username", "newUsername")
+                        .param("password", "passwordtest123!")
+                        .param("role", "USER"))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection());
+    }
+
+    @Test
+    @WithUserDetails(value = "toto", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    void ShouldDeleteUser() throws Exception {
+        User userToDelete = new User();
+        userToDelete.setUsername("test");
+        userToDelete.setRole("USER");
+        userToDelete.setPassword("passwordtest123!");
+        userToDelete.setFullname("test");
+
+        userRepository.save(userToDelete);
+
+        mockMvc.perform(get("/user/delete/1")
                         .with(csrf()))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful());
