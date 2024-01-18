@@ -32,11 +32,4 @@ public class Rating {
     @NotNull
     private Integer orderNumber;
 
-    public Rating(String moodysRating, String sandPRating, String fitchRating, int orderNumber) {
-
-    }
-
-    public Rating() {
-
-    }
 }

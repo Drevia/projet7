@@ -55,7 +55,7 @@ public class SpringSecurityConfig {
 
     /**
      * Provide setting as passwordEncoder we use and our customUserDetailsService
-     * @return AuthencationManager with setting provided
+     * @return AuthenticationManager with setting provided
      */
     @Bean
     public AuthenticationManager authenticationManager() {

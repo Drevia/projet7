@@ -1,6 +1,5 @@
 package com.nnk.springboot.service;
 
-import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.repositories.TradeRepository;
 import org.junit.jupiter.api.Test;
@@ -18,7 +17,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.doNothing;
 
 @ExtendWith(MockitoExtension.class)
 public class TradeServiceTest {
@@ -39,7 +37,9 @@ public class TradeServiceTest {
     @Test
     void findAllTrade_OK() {
         List<Trade> tradeList = new ArrayList<>();
-        Trade trade = new Trade("account", "type");
+        Trade trade = new Trade();
+        trade.setAccount("account");
+        trade.setType("type");
         tradeList.add(trade);
 
         when(tradeRepository.findAll()).thenReturn(tradeList);
@@ -55,11 +55,17 @@ public class TradeServiceTest {
 
     @Test
     void updateTrade_OK() {
-        Trade trade = new Trade("account", "type");
+        Trade trade = new Trade();
+        trade.setAccount("account");
+        trade.setType("type");
+
+        Trade tradeUpdate = new Trade();
+        trade.setAccount("accountUpdate");
+        trade.setType("typeUpdate");
         when(tradeRepository.findById(anyInt())).thenReturn(Optional.of(trade));
 
         assertDoesNotThrow(() -> service.updateTrade(1,
-                new Trade("type", "account")));
+                tradeUpdate));
         verify(tradeRepository, times(1)).save(trade);
     }
 

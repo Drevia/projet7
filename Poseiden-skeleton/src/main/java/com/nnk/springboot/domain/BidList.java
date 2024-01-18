@@ -46,14 +46,6 @@ public class BidList {
     private String sourceListId;
     private String side;
 
-    public BidList(String accountTest, String typeTest, double bid) {
-
-    }
-
-    public BidList() {
-
-    }
-
     public void setId(Long bidListId) {
         this.id = bidListId;
     }

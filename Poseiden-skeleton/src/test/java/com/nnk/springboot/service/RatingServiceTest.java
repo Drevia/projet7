@@ -63,9 +63,17 @@ class RatingServiceTest {
         rating.setOrderNumber(1);
         rating.setSandPRating("1");
         rating.setId(1L);
+
+        Rating ratingUpdate = new Rating();
+        rating.setMoodysRating("2");
+        rating.setFitchRating("3");
+        rating.setOrderNumber(4);
+        rating.setSandPRating("5");
+        rating.setId(1L);
+
         when(ratingRepository.findById(anyInt())).thenReturn(Optional.of(rating));
 
-        assertDoesNotThrow(() -> service.updateRating(1, new Rating("2","3","4",5)));
+        assertDoesNotThrow(() -> service.updateRating(1, ratingUpdate));
         verify(ratingRepository, times(1)).save(rating);
     }
 

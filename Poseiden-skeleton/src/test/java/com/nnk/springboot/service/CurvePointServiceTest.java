@@ -1,6 +1,5 @@
 package com.nnk.springboot.service;
 
-import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.repositories.CurvePointRepository;
 import org.junit.jupiter.api.Test;
@@ -18,7 +17,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.doNothing;
 
 @ExtendWith(MockitoExtension.class)
 public class CurvePointServiceTest {
@@ -39,7 +37,10 @@ public class CurvePointServiceTest {
     @Test
     void findAllCurve_OK() {
         List<CurvePoint> curvePointList = new ArrayList<>();
-        CurvePoint curvePoint = new CurvePoint(1, 2, 3);
+        CurvePoint curvePoint = new CurvePoint();
+        curvePoint.setCurveId(1);
+        curvePoint.setTerm(2d);
+        curvePoint.setValue(3d);
         curvePointList.add(curvePoint);
 
         when(curvePointRepository.findAll()).thenReturn(curvePointList);
@@ -55,11 +56,14 @@ public class CurvePointServiceTest {
 
     @Test
     void updateTrade_OK() {
-        CurvePoint curvePoint = new CurvePoint(1, 2, 3);
+        CurvePoint curvePoint = new CurvePoint();
+        curvePoint.setCurveId(1);
+        curvePoint.setTerm(2d);
+        curvePoint.setValue(3d);
         when(curvePointRepository.findById(anyInt())).thenReturn(Optional.of(curvePoint));
 
         assertDoesNotThrow(() -> service.updateCurvePoint(1,
-                new CurvePoint(4, 5, 6)));
+                curvePoint));
         verify(curvePointRepository, times(1)).save(curvePoint);
     }
 

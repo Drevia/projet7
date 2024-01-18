@@ -1,7 +1,6 @@
 package com.nnk.springboot.service;
 
 import com.nnk.springboot.domain.BidList;
-import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.repositories.BidListRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,7 +17,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.doNothing;
 
 @ExtendWith(MockitoExtension.class)
 public class BidListServiceTest {
@@ -39,7 +37,10 @@ public class BidListServiceTest {
     @Test
     void findAllBid_OK() {
         List<BidList> bidLists = new ArrayList<>();
-        BidList bidList = new BidList("account", "type", 1);
+        BidList bidList = new BidList();
+        bidList.setAccount("account");
+        bidList.setType("type");
+        bidList.setBid(1d);
         bidLists.add(bidList);
 
         when(bidListRepository.findAll()).thenReturn(bidLists);
@@ -55,11 +56,14 @@ public class BidListServiceTest {
 
     @Test
     void updateTrade_OK() {
-        BidList bidList = new BidList("account", "type", 1);
+        BidList bidList = new BidList();
+        bidList.setAccount("account");
+        bidList.setType("type");
+        bidList.setBid(1d);
         when(bidListRepository.findById(anyInt())).thenReturn(Optional.of(bidList));
 
         assertDoesNotThrow(() -> service.updateBidList(1,
-                 new BidList("account", "type", 1)));
+                bidList));
         verify(bidListRepository, times(1)).save(bidList);
     }
 

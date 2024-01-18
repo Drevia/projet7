@@ -29,6 +29,7 @@ public class PasswordValidator implements ConstraintValidator<ValidPassword, Str
 
         int digitCount = 0;
         int specialCharCount = 0;
+        int lowerCaseChar = 0;
 
         for (char c : rawPassword.toString().toCharArray()) {
             if (Character.isDigit(c)) {
@@ -36,6 +37,14 @@ public class PasswordValidator implements ConstraintValidator<ValidPassword, Str
             } else if (SPECIAL_CHARACTERS.indexOf(c) != -1) {
                 specialCharCount++;
             }
+
+            if(Character.isLowerCase(c)){
+                lowerCaseChar++;
+            }
+        }
+
+        if (lowerCaseChar == 0) {
+            return false;
         }
         return digitCount >= MIN_DIGITS && specialCharCount > 0;
     }

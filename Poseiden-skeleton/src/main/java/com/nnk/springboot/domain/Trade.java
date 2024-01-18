@@ -45,12 +45,4 @@ public class Trade {
     private String dealType;
     private String sourceListId;
     private String side;
-
-    public Trade(String tradeAccount, String type) {
-
-    }
-
-    public Trade() {
-
-    }
 }

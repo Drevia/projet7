@@ -17,7 +17,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.doNothing;
 
 @ExtendWith(MockitoExtension.class)
 public class RuleNameServiceTest {
@@ -38,8 +37,13 @@ public class RuleNameServiceTest {
     @Test
     void findAllRuleName_OK() {
         List<RuleName> ruleNameList = new ArrayList<>();
-        RuleName ruleName = new RuleName("name", "description",
-                "json", "template", "stf", "part");
+        RuleName ruleName = new RuleName();
+        ruleName.setName("name");
+        ruleName.setDescription("desc");
+        ruleName.setJson("json");
+        ruleName.setTemplate("temp");
+        ruleName.setSqlStr("str");
+        ruleName.setSqlPart("part");
         ruleNameList.add(ruleName);
 
         when(ruleNameRepository.findAll()).thenReturn(ruleNameList);
@@ -55,12 +59,25 @@ public class RuleNameServiceTest {
 
     @Test
     void updateRuleName_OK() {
-        RuleName ruleName = new RuleName("name", "description",
-                "json", "template", "stf", "part");
+        RuleName ruleName = new RuleName();
+        ruleName.setName("name");
+        ruleName.setDescription("desc");
+        ruleName.setJson("json");
+        ruleName.setTemplate("temp");
+        ruleName.setSqlStr("str");
+        ruleName.setSqlPart("part");
+
+        RuleName ruleNameUpdate = new RuleName();
+        ruleName.setName("1");
+        ruleName.setDescription("2");
+        ruleName.setJson("3");
+        ruleName.setTemplate("4");
+        ruleName.setSqlStr("5");
+        ruleName.setSqlPart("6");
+
         when(ruleNameRepository.findById(anyInt())).thenReturn(Optional.of(ruleName));
 
-        assertDoesNotThrow(() -> service.updateRuleName(1, new RuleName("2","3",
-                "4","5", "6", "7")));
+        assertDoesNotThrow(() -> service.updateRuleName(1, ruleNameUpdate));
         verify(ruleNameRepository, times(1)).save(ruleName);
     }
 
