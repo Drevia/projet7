@@ -66,7 +66,7 @@ public class RatingController {
             //ajouter un log warn/info
             return "rating/update";
         } else {
-            ratingService.updateRating(id, rating);
+            ratingService.updateRating(rating);
         }
         return "redirect:/rating/list";
     }

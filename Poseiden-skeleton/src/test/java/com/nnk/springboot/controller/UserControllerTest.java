@@ -2,6 +2,7 @@ package com.nnk.springboot.controller;
 
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.UserRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -36,6 +37,11 @@ public class UserControllerTest {
 
     @Autowired
     private UserRepository userRepository;
+
+    @BeforeEach
+    void init() {
+
+    }
 
     @Test
     @WithUserDetails(value = "toto", setupBefore = TestExecutionEvent.TEST_EXECUTION)
@@ -107,9 +113,10 @@ public class UserControllerTest {
         userToDelete.setPassword("passwordtest123!");
         userToDelete.setFullname("test");
 
-        userRepository.save(userToDelete);
+        User user = userRepository.save(userToDelete);
+        Integer id = user.getId();
 
-        mockMvc.perform(get("/user/delete/1")
+        mockMvc.perform(get("/user/delete/" + id.toString())
                         .with(csrf()))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful());

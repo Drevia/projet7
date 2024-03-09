@@ -14,29 +14,43 @@ public class CurveService {
     @Autowired
     private CurvePointRepository repository;
 
+    /**
+     *
+     * @return all CurvePoint from the database
+     */
     public List<CurvePoint> findAllCurve() {
         return repository.findAll();
     }
 
+    /**
+     *
+     * @param id of the CurvePoint we want to find
+     * @return Optional with CurvePoint we found if exist or Optional empty
+     */
     public Optional<CurvePoint> findCurveById(Integer id) {
         return repository.findById(id);
     }
 
+    /**
+     *
+     * @param curvePoint we want to save in database
+     */
     public void saveCurve(CurvePoint curvePoint) {
         repository.save(curvePoint);
     }
 
-    public void updateCurvePoint(Integer id, CurvePoint newCurvePoint) {
-        CurvePoint curvePoint = repository.findById(id).orElseThrow();
-        curvePoint.setTerm(newCurvePoint.getTerm());
-        curvePoint.setValue(newCurvePoint.getValue());
-        curvePoint.setCreationDate(newCurvePoint.getCreationDate());
-        curvePoint.setAsOfDate(newCurvePoint.getAsOfDate());
-
-        repository.save(curvePoint);
-
+    /**
+     *
+     * @param newCurvePoint we send to update
+     */
+    public void updateCurvePoint(CurvePoint newCurvePoint) {
+        repository.save(newCurvePoint);
     }
 
+    /**
+     *
+     * @param id of the CurvePoint we want to delete from the database
+     */
     public void deleteCurveById(Integer id) {
         repository.deleteById(id);
     }

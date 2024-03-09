@@ -61,7 +61,7 @@ public class TradeController {
         if(result.hasErrors()) {
             return "trade/update";
         } else {
-            service.updateTrade(id, trade);
+            service.updateTrade(trade);
         }
         return "redirect:/trade/list";
     }

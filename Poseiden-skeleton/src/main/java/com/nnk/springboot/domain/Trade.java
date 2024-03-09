@@ -1,6 +1,7 @@
 package com.nnk.springboot.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
@@ -27,9 +28,13 @@ public class Trade {
     @NotBlank
     private String type;
     @NotNull
+    @Min(0)
     private Double buyQuantity;
+    @Min(0)
     private Double sellQuantity;
+    @Min(0)
     private Double buyPrice;
+    @Min(0)
     private Double sellPrice;
     private String benchmark;
     private Timestamp tradeDate;

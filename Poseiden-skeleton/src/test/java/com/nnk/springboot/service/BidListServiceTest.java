@@ -60,10 +60,8 @@ public class BidListServiceTest {
         bidList.setAccount("account");
         bidList.setType("type");
         bidList.setBid(1d);
-        when(bidListRepository.findById(anyInt())).thenReturn(Optional.of(bidList));
 
-        assertDoesNotThrow(() -> service.updateBidList(1,
-                bidList));
+        assertDoesNotThrow(() -> service.updateBidList(bidList));
         verify(bidListRepository, times(1)).save(bidList);
     }
 

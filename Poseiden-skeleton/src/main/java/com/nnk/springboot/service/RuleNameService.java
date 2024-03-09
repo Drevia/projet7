@@ -14,30 +14,43 @@ public class RuleNameService {
     @Autowired
     private RuleNameRepository repository;
 
+    /**
+     *
+     * @return all RuleName from the database
+     */
     public List<RuleName> findAllRuleName() {
         return repository.findAll();
     }
 
+    /**
+     *
+     * @param id of the RuleName we want to find
+     * @return Optional with RuleName we found if exist or Optional empty
+     */
     public Optional<RuleName> findById(Integer id) {
         return repository.findById(id);
     }
 
+    /**
+     *
+     * @param ruleName we want to save in database
+     */
     public void saveRuleName(RuleName ruleName) {
         repository.save(ruleName);
     }
 
-    public void updateRuleName(Integer id, RuleName newRuleName) {
-        RuleName ruleName = repository.findById(id).orElseThrow();
-        ruleName.setName(newRuleName.getName());
-        ruleName.setDescription(newRuleName.getDescription());
-        ruleName.setJson(newRuleName.getJson());
-        ruleName.setTemplate(newRuleName.getTemplate());
-        ruleName.setSqlPart(newRuleName.getSqlPart());
-        ruleName.setSqlStr(newRuleName.getSqlStr());
-
-        repository.save(ruleName);
+    /**
+     *
+     * @param newRuleName we send to update
+     */
+    public void updateRuleName(RuleName newRuleName) {
+        repository.save(newRuleName);
     }
 
+    /**
+     *
+     * @param id of the RuleName we want to delete from the database
+     */
     public void deleteById(Integer id) {
         repository.deleteById(id);
     }

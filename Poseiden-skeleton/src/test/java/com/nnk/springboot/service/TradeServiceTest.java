@@ -54,19 +54,13 @@ public class TradeServiceTest {
     }
 
     @Test
-    void updateTrade_OK() {
-        Trade trade = new Trade();
-        trade.setAccount("account");
-        trade.setType("type");
-
+    void updateTrade_OK() {;
         Trade tradeUpdate = new Trade();
-        trade.setAccount("accountUpdate");
-        trade.setType("typeUpdate");
-        when(tradeRepository.findById(anyInt())).thenReturn(Optional.of(trade));
+        tradeUpdate.setAccount("accountUpdate");
+        tradeUpdate.setType("typeUpdate");
 
-        assertDoesNotThrow(() -> service.updateTrade(1,
-                tradeUpdate));
-        verify(tradeRepository, times(1)).save(trade);
+        assertDoesNotThrow(() -> service.updateTrade(tradeUpdate));
+        verify(tradeRepository, times(1)).save(tradeUpdate);
     }
 
     @Test

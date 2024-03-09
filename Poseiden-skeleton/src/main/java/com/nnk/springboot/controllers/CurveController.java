@@ -63,7 +63,7 @@ public class CurveController {
         if(result.hasErrors()) {
             return "curvePoint/update";
         } else{
-            service.updateCurvePoint(id, curvePoint);
+            service.updateCurvePoint(curvePoint);
         }
         return "redirect:/curvePoint/list";
     }

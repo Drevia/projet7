@@ -1,6 +1,7 @@
 package com.nnk.springboot.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
@@ -26,9 +27,16 @@ public class BidList {
     @NotBlank
     private String type;
     @NotNull
+    @Min(0)
     private Double bidQuantity;
+
+    @Min(0)
     private Double askQuantity;
+
+    @Min(0)
     private Double bid;
+
+    @Min(0)
     private Double ask;
     private String benchmark;
     private Timestamp bidListDate;
@@ -45,13 +53,5 @@ public class BidList {
     private String dealType;
     private String sourceListId;
     private String side;
-
-    public void setId(Long bidListId) {
-        this.id = bidListId;
-    }
-
-    public Long getId() {
-        return id;
-    }
 
 }

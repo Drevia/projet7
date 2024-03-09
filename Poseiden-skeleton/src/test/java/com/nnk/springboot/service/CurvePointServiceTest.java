@@ -60,10 +60,8 @@ public class CurvePointServiceTest {
         curvePoint.setCurveId(1);
         curvePoint.setTerm(2d);
         curvePoint.setValue(3d);
-        when(curvePointRepository.findById(anyInt())).thenReturn(Optional.of(curvePoint));
 
-        assertDoesNotThrow(() -> service.updateCurvePoint(1,
-                curvePoint));
+        assertDoesNotThrow(() -> service.updateCurvePoint(curvePoint));
         verify(curvePointRepository, times(1)).save(curvePoint);
     }
 

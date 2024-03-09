@@ -1,6 +1,7 @@
 package com.nnk.springboot.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
@@ -30,6 +31,7 @@ public class Rating {
     private String fitchRating;
 
     @NotNull
+    @Min(0)
     private Integer orderNumber;
 
 }

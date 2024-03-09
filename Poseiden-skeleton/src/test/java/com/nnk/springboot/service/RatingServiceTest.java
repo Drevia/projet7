@@ -57,24 +57,16 @@ class RatingServiceTest {
 
     @Test
     void updateRating_OK() {
-        Rating rating = new Rating();
-        rating.setMoodysRating("1");
-        rating.setFitchRating("1");
-        rating.setOrderNumber(1);
-        rating.setSandPRating("1");
-        rating.setId(1L);
 
         Rating ratingUpdate = new Rating();
-        rating.setMoodysRating("2");
-        rating.setFitchRating("3");
-        rating.setOrderNumber(4);
-        rating.setSandPRating("5");
-        rating.setId(1L);
+        ratingUpdate.setMoodysRating("2");
+        ratingUpdate.setFitchRating("3");
+        ratingUpdate.setOrderNumber(4);
+        ratingUpdate.setSandPRating("5");
+        ratingUpdate.setId(1L);
 
-        when(ratingRepository.findById(anyInt())).thenReturn(Optional.of(rating));
-
-        assertDoesNotThrow(() -> service.updateRating(1, ratingUpdate));
-        verify(ratingRepository, times(1)).save(rating);
+        assertDoesNotThrow(() -> service.updateRating(ratingUpdate));
+        verify(ratingRepository, times(1)).save(ratingUpdate);
     }
 
     @Test

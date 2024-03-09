@@ -63,7 +63,7 @@ public class RuleNameController {
             //ajouter un log warn/info
             return "ruleName/update";
         } else {
-            service.updateRuleName(id, ruleName);
+            service.updateRuleName(ruleName);
         }
         return "redirect:/ruleName/list";
     }

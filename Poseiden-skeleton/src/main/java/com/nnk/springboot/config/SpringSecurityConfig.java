@@ -24,8 +24,8 @@ public class SpringSecurityConfig {
      * <br>- all url you can access when authenticated</br>
      * <br>- use session based</br>
      * <br>- invalidate session when logout</br>
-     * @param http
-     * @return
+     * @param http param to manage behavior on each url requested
+     * @return configuration we set with http
      * @throws Exception
      */
     @Bean

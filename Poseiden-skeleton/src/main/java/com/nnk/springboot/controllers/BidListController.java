@@ -60,7 +60,7 @@ public class BidListController {
         if(result.hasErrors()){
             return "ruleName/update";
         } else {
-            service.updateBidList(id, bidList);
+            service.updateBidList(bidList);
         }
         return "redirect:/bidList/list";
     }

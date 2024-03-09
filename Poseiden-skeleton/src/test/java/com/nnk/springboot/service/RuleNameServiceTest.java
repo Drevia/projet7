@@ -67,17 +67,7 @@ public class RuleNameServiceTest {
         ruleName.setSqlStr("str");
         ruleName.setSqlPart("part");
 
-        RuleName ruleNameUpdate = new RuleName();
-        ruleName.setName("1");
-        ruleName.setDescription("2");
-        ruleName.setJson("3");
-        ruleName.setTemplate("4");
-        ruleName.setSqlStr("5");
-        ruleName.setSqlPart("6");
-
-        when(ruleNameRepository.findById(anyInt())).thenReturn(Optional.of(ruleName));
-
-        assertDoesNotThrow(() -> service.updateRuleName(1, ruleNameUpdate));
+        assertDoesNotThrow(() -> service.updateRuleName(ruleName));
         verify(ruleNameRepository, times(1)).save(ruleName);
     }
 
